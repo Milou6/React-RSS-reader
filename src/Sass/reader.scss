@@ -1,0 +1,222 @@
+$c1: #1291b3;
+$c3: #ffb800;
+
+$g2: #75b3c4;
+$g3: #e2ecee;
+
+$b1: #1d2d31;
+
+/* ========================================================================== */
+/* GENERAL */
+/* ========================================================================== */
+html {
+  background-color: white;
+  font-size: 62.5%;
+  font-family: 'Roboto', sans-serif;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label,
+input {
+  font-size: 2rem;
+}
+
+.box-g2 {
+  background-color: $g2;
+  border-radius: 10px;
+}
+.box-g3 {
+  background-color: $g3;
+  border-radius: 10px;
+}
+
+.accent {
+  background-color: $c3;
+}
+
+// .gradient1 {
+//   background: linear-gradient(94.3deg, #ff6b00 4.48%, #d5008c 97.49%);
+//   border-radius: 15px;
+// }
+
+// .gradient2 {
+//   background: linear-gradient(269.5deg, #ffdabf 0.11%, #ff8e80 98.42%);
+//   border-radius: 10px;
+// }
+.btn {
+  border: none;
+  // color: white;
+  font-weight: bold;
+  border-radius: 10px;
+}
+.btn:hover {
+  cursor: pointer;
+}
+
+/* ========================================================================== */
+/* AddFeedMenu */
+/* ========================================================================== */
+
+.add-feed-menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+  width: 80vw;
+
+  padding: 20px 50px;
+}
+.add-feed-menu input[type='text'] {
+  width: 30rem;
+  border-radius: 10px;
+  border: none;
+  padding: 10px 5px;
+}
+.add-feed-btn {
+  padding: 10px 30px;
+  color: white;
+}
+.add-feed-btn:hover {
+  color: $c3;
+  background-color: white;
+}
+
+/* ========================================================================== */
+/* UserFeeds */
+/* ========================================================================== */
+.user-feeds {
+  display: flex;
+  align-items: center;
+
+  width: 80vw;
+  padding: 20px 50px;
+  font-size: 1.5rem;
+}
+
+.user-feeds li {
+  list-style: none;
+}
+/* .user-feeds a {
+  text-decoration: none;
+  margin: 0 5px;
+} */
+
+.user-feeds-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 10px;
+  margin: 0 10px;
+  background-color: $c1;
+  color: white;
+  border-radius: 25px;
+}
+.user-feeds-item:hover {
+  background-color: white;
+  // .user-feeds-item .btn {
+  color: $c1;
+  // }
+}
+.delete-btn {
+  padding-left: 10px;
+}
+.delete-btn:hover {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  color: $c3;
+}
+
+/* ========================================================================== */
+/* FeedDisplay */
+/* ========================================================================== */
+.feed-display {
+  /* display: flex;
+  flex-direction: column; */
+  /* align-items: left; */
+  align-self: start;
+  /* justify-content: center; */
+
+  height: 90vh;
+  overflow: scroll;
+  width: 80vw;
+
+  margin-top: 50px;
+  padding: 0 0;
+}
+.feed-display ul {
+  /* margin: 0 0; */
+  padding: 0 10px;
+}
+
+.display-item {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+
+  /* width: 400px; */
+  /* height: 4.5rem; */
+  /* width: 100%; */
+  // background: rgba(255, 255, 255, 0.5);
+
+  padding: 15px 5px;
+  margin: 10px 0;
+  border-radius: 10px;
+}
+
+.display-item-header {
+  display: flex;
+  justify-content: space-between;
+
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 1);
+
+  padding: 0 0;
+  margin: 0 0;
+}
+.display-item span:hover {
+  cursor: pointer;
+}
+
+.display-item:hover {
+  .display-item-arrow {
+    color: $c3;
+    font-size: 2.2rem;
+  }
+}
+
+.display-item a {
+  text-decoration: none;
+  color: white;
+}
+.link-btn {
+  padding: 5px 5px;
+  margin: 5px 5px;
+}
+.link-btn:hover {
+  color: $c3;
+  background-color: white;
+}
+
+/* ========================================================================== */
+/*  */
+/* ========================================================================== */
+.display-item-description {
+  font-size: 1.5rem;
+  margin-top: 20px;
+}
+.display-item-description a {
+  font-size: 1.5rem;
+  text-decoration: underline;
+  color: black;
+}
+.display-item-description img {
+  max-width: 40rem;
+}

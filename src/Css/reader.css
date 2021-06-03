@@ -1,0 +1,204 @@
+/* ========================================================================== */
+/* GENERAL */
+/* ========================================================================== */
+html {
+  background-color: white;
+  font-size: 62.5%;
+  font-family: "Roboto", sans-serif;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label,
+input {
+  font-size: 2rem;
+}
+
+.box-g2 {
+  background-color: #75b3c4;
+  border-radius: 10px;
+}
+
+.box-g3 {
+  background-color: #e2ecee;
+  border-radius: 10px;
+}
+
+.accent {
+  background-color: #ffb800;
+}
+
+.btn {
+  border: none;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+.btn:hover {
+  cursor: pointer;
+}
+
+/* ========================================================================== */
+/* AddFeedMenu */
+/* ========================================================================== */
+.add-feed-menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+  width: 80vw;
+  padding: 20px 50px;
+}
+
+.add-feed-menu input[type=text] {
+  width: 30rem;
+  border-radius: 10px;
+  border: none;
+  padding: 10px 5px;
+}
+
+.add-feed-btn {
+  padding: 10px 30px;
+  color: white;
+}
+
+.add-feed-btn:hover {
+  color: #ffb800;
+  background-color: white;
+}
+
+/* ========================================================================== */
+/* UserFeeds */
+/* ========================================================================== */
+.user-feeds {
+  display: flex;
+  align-items: center;
+  width: 80vw;
+  padding: 20px 50px;
+  font-size: 1.5rem;
+}
+
+.user-feeds li {
+  list-style: none;
+}
+
+/* .user-feeds a {
+  text-decoration: none;
+  margin: 0 5px;
+} */
+.user-feeds-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 10px;
+  margin: 0 10px;
+  background-color: #1291b3;
+  color: white;
+  border-radius: 25px;
+}
+
+.user-feeds-item:hover {
+  background-color: white;
+  color: #1291b3;
+}
+
+.delete-btn {
+  padding-left: 10px;
+}
+
+.delete-btn:hover {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  color: #ffb800;
+}
+
+/* ========================================================================== */
+/* FeedDisplay */
+/* ========================================================================== */
+.feed-display {
+  /* display: flex;
+  flex-direction: column; */
+  /* align-items: left; */
+  align-self: start;
+  /* justify-content: center; */
+  height: 90vh;
+  overflow: scroll;
+  width: 80vw;
+  margin-top: 50px;
+  padding: 0 0;
+}
+
+.feed-display ul {
+  /* margin: 0 0; */
+  padding: 0 10px;
+}
+
+.display-item {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  /* width: 400px; */
+  /* height: 4.5rem; */
+  /* width: 100%; */
+  padding: 15px 5px;
+  margin: 10px 0;
+  border-radius: 10px;
+}
+
+.display-item-header {
+  display: flex;
+  justify-content: space-between;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 2rem;
+  color: white;
+  padding: 0 0;
+  margin: 0 0;
+}
+
+.display-item span:hover {
+  cursor: pointer;
+}
+
+.display-item:hover .display-item-arrow {
+  color: #ffb800;
+  font-size: 2.2rem;
+}
+
+.display-item a {
+  text-decoration: none;
+  color: white;
+}
+
+.link-btn {
+  padding: 5px 5px;
+  margin: 5px 5px;
+}
+
+.link-btn:hover {
+  color: #ffb800;
+  background-color: white;
+}
+
+/* ========================================================================== */
+/*  */
+/* ========================================================================== */
+.display-item-description {
+  font-size: 1.5rem;
+  margin-top: 20px;
+}
+
+.display-item-description a {
+  font-size: 1.5rem;
+  text-decoration: underline;
+  color: black;
+}
+
+.display-item-description img {
+  max-width: 40rem;
+}
