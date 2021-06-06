@@ -34,29 +34,20 @@ function App() {
   // Fetch feed from url
   async function fetchFeedFromUrl(url) {
     try {
-      const proxy = 'https://api.rss2json.com/v1/api.json?rss_url=';
-      const encoded = encodeURIComponent(url);
-      const key = '&api_key=🛑YOUR_API_KEY_HERE🛑';
-
-      const fetchURL = `${proxy}${encoded}${key}`;
-
-      // console.log(fetchURL);
-      const request = await fetch(fetchURL, {
-        // credentials: 'include',
-        // headers: {
-        //   'Content-Type': 'application/json',
-        // },
-      });
+      // 💯 USING NETLIFY FUNCTIONS TO FETCH RSS FEED WITHOUT LEAKING API KEY
+      const request = await fetch(`/.netlify/functions/fetchfeed?url=${url}`);
+      // console.log(request);
 
       // If request failed, we do an early return!
       if (request.status !== 200) {
         alert(
           "Couldn't fetch feed from the URL provided. \n\nPlease check whether inputting the URL on https://rss2json.com gives a valid JSON."
         );
-        return;
+        throw new Error(request.statusText);
       }
 
       const json = await request.json();
+      // console.log(json);
       return json;
     } catch (err) {
       console.log(err);
@@ -73,6 +64,8 @@ function App() {
         setFetchedData([...fetchedData, response]);
         // set URL into local storage
         localStorage.setItem(url, 1);
+        // Switch to newly added feed
+        setDisplayedFeed(fetchedData.length);
       }
     } else {
       alert('This feed is already on your display!');
@@ -86,6 +79,9 @@ function App() {
 
     setFetchedData(fetchedData.filter((feed) => feed.feed.title !== title));
     localStorage.removeItem(url);
+
+    console.log(`switch displayed-feed : ${fetchedData.length - 1}`);
+    setDisplayedFeed(fetchedData.length - 2); // Gotta do minus 2 to get last feed added!
   };
 
   // Switch the feed to be displayed
@@ -129,7 +125,6 @@ function App() {
 // https://cors-anywhere.herokuapp.com/
 // http://www.reddit.com/.rss
 // https://www.theguardian.com/international/rss
-// sss
 // https://lifehacker.com/rss
 // http://rss.cnn.com/rss/edition.rss
 export default App;
