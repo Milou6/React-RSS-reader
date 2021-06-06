@@ -10,7 +10,7 @@ $b1: #1d2d31;
 /* GENERAL */
 /* ========================================================================== */
 html {
-  background-color: white;
+  background-color: #f3fbff;
   font-size: 62.5%;
   font-family: 'Roboto', sans-serif;
 }
@@ -26,12 +26,7 @@ input {
   font-size: 2rem;
 }
 
-.box-g2 {
-  background-color: $g2;
-  border-radius: 10px;
-}
-.box-g3 {
-  background-color: $g3;
+.br10 {
   border-radius: 10px;
 }
 
@@ -53,6 +48,8 @@ input {
   // color: white;
   font-weight: bold;
   border-radius: 10px;
+  white-space: nowrap;
+  // overflow: hidden;
 }
 .btn:hover {
   cursor: pointer;
@@ -70,12 +67,15 @@ input {
   width: 80vw;
 
   padding: 20px 50px;
+  background-color: white;
+  filter: drop-shadow(0px 0px 10px rgba(51, 152, 211, 0.25));
 }
 .add-feed-menu input[type='text'] {
-  width: 30rem;
+  width: 40rem;
   border-radius: 10px;
   border: none;
   padding: 10px 5px;
+  border: 1px solid #dcdcdc;
 }
 .add-feed-btn {
   padding: 10px 30px;
@@ -86,6 +86,10 @@ input {
   background-color: white;
 }
 
+.active-feed {
+  color: $c3;
+}
+
 /* ========================================================================== */
 /* UserFeeds */
 /* ========================================================================== */
@@ -93,9 +97,15 @@ input {
   display: flex;
   align-items: center;
 
-  width: 80vw;
-  padding: 20px 50px;
+  width: max-content;
+  height: 2rem;
+  padding: 20px 20px;
+  margin: 15px 15px;
   font-size: 1.5rem;
+
+  overflow: hidden;
+  background-color: white;
+  filter: drop-shadow(0px 0px 10px rgba(51, 152, 211, 0.25));
 }
 
 .user-feeds li {
@@ -110,8 +120,12 @@ input {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  // min-width: 15rem;
+  min-width: auto;
+
   padding: 10px 10px;
   margin: 0 10px;
+
   background-color: $c1;
   color: white;
   border-radius: 25px;
@@ -124,6 +138,7 @@ input {
 }
 .delete-btn {
   padding-left: 10px;
+  min-width: 15px;
 }
 .delete-btn:hover {
   cursor: pointer;
@@ -143,11 +158,14 @@ input {
   /* justify-content: center; */
 
   height: 90vh;
-  overflow: scroll;
+  overflow: hidden;
   width: 80vw;
 
   margin-top: 50px;
   padding: 0 0;
+
+  background-color: white;
+  filter: drop-shadow(0px 0px 30px rgba(51, 152, 211, 0.25));
 }
 .feed-display ul {
   /* margin: 0 0; */
@@ -167,6 +185,8 @@ input {
   padding: 15px 5px;
   margin: 10px 0;
   border-radius: 10px;
+  background-color: #d0efff;
+  // filter: drop-shadow(0px 0px 5px rgba(51, 152, 211, 0.25));
 }
 
 .display-item-header {
@@ -176,7 +196,7 @@ input {
   text-decoration: none;
   font-weight: bold;
   font-size: 2rem;
-  color: rgba(255, 255, 255, 1);
+  color: #1d2d31;
 
   padding: 0 0;
   margin: 0 0;
@@ -194,7 +214,7 @@ input {
 
 .display-item a {
   text-decoration: none;
-  color: white;
+  color: #1d2d31;
 }
 .link-btn {
   padding: 5px 5px;
@@ -202,7 +222,7 @@ input {
 }
 .link-btn:hover {
   color: $c3;
-  background-color: white;
+  background-color: #1d2d31;
 }
 
 /* ========================================================================== */

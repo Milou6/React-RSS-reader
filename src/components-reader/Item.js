@@ -25,7 +25,7 @@ function Item({ data }) {
           >
             Link
           </a>
-          <span>{data.title}</span>
+          <span>{data.title.replace('&amp;', '&')}</span>
         </div>
         <span className='display-item-arrow'>▼</span>
       </span>

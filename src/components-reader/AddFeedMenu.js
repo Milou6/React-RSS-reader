@@ -7,22 +7,17 @@ function AddFeedMenu({ onAdd }) {
     e.preventDefault();
 
     if (!url) {
-      alert('Please add an URL to form');
+      alert('Please choose a URL to add to your RSS feed!');
       return;
     }
 
     onAdd(url);
+    // reset field to placeholder
     setUrl('');
-
-    // onAdd({ text, day, reminder });
-
-    // setText('');
-    // setDay('');
-    // setReminder(false);
   };
 
   return (
-    <form className='add-feed-menu box-g2' onSubmit={onSubmit}>
+    <form className='add-feed-menu br10' onSubmit={onSubmit}>
       {/* <label>RSS URL:</label> */}
       <input
         type='text'

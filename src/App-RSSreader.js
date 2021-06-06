@@ -20,9 +20,12 @@ function App() {
       // for each url saved, reload it into display by calling addFeed()
       for (let i = 0; i < localStorage.length; i++) {
         let feed = await fetchFeedFromUrl(localStorage.key(i));
-        reloadedFeeds.push(feed);
+        // CHECKING THAT THE FEED != undefined
+        if (feed) {
+          reloadedFeeds.push(feed);
+        }
       }
-      console.log(reloadedFeeds);
+      // console.log(reloadedFeeds);
       setFetchedData([...fetchedData, ...reloadedFeeds]);
     };
     reAddSavedFeeds();
@@ -33,7 +36,9 @@ function App() {
     try {
       const proxy = 'https://api.rss2json.com/v1/api.json?rss_url=';
       const encoded = encodeURIComponent(url);
-      const key = /*🛑YOUR rss2json.com API KEY HERE🛑*/ 
+      const key = '&api_key=🛑YOUR_API_KEY_HERE🛑';
+
+      const fetchURL = `${proxy}${encoded}${key}`;
 
       // console.log(fetchURL);
       const request = await fetch(fetchURL, {
@@ -42,6 +47,14 @@ function App() {
         //   'Content-Type': 'application/json',
         // },
       });
+
+      // If request failed, we do an early return!
+      if (request.status !== 200) {
+        alert(
+          "Couldn't fetch feed from the URL provided. \n\nPlease check whether inputting the URL on https://rss2json.com gives a valid JSON."
+        );
+        return;
+      }
 
       const json = await request.json();
       return json;
@@ -55,14 +68,12 @@ function App() {
     if (!localStorage.getItem(url)) {
       const response = await fetchFeedFromUrl(url);
 
-      // console.log('before:');
-      // console.log(fetchedData);
-      setFetchedData([...fetchedData, response]);
-      // console.log('after:');
-      // console.log(fetchedData);
-
-      // set URL into local storage
-      localStorage.setItem(url, 1);
+      // If fetch failed, block below won't execute
+      if (response) {
+        setFetchedData([...fetchedData, response]);
+        // set URL into local storage
+        localStorage.setItem(url, 1);
+      }
     } else {
       alert('This feed is already on your display!');
     }
@@ -79,15 +90,16 @@ function App() {
 
   // Switch the feed to be displayed
   const switchDisplayedFeed = (e, feedUrl) => {
-    console.log(e.target.innerHTML);
+    console.log(e);
 
     // find the feed that matches title of button clicked
     let feedIndex = -1;
     fetchedData.forEach((elm, index) => {
       // if (elm.feed.title === e.target.innerHTML) feedIndex = index;
-      if (elm.feed.url === feedUrl) feedIndex = index;
+      if (elm.feed.url === feedUrl) {
+        feedIndex = index;
+      }
     });
-    // console.log(feedIndex);
     if (feedIndex === -1) throw new Error('Feed requested not found!');
     // set the State var to update the displayed feed
     setDisplayedFeed(feedIndex);
@@ -99,6 +111,7 @@ function App() {
       {fetchedData.length > 0 ? (
         <UserFeeds
           feeds={fetchedData}
+          displayedFeed={displayedFeed}
           switchDisplayedFeed={switchDisplayedFeed}
           deleteFeed={deleteFeed}
         />
@@ -118,4 +131,5 @@ function App() {
 // https://www.theguardian.com/international/rss
 // sss
 // https://lifehacker.com/rss
+// http://rss.cnn.com/rss/edition.rss
 export default App;
