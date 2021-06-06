@@ -4,7 +4,7 @@
 
 This RSS reader is a small project, that I built to practice my React skills.
 
-You can find a live version of the site here : [https://nervous-panini-4ea298.netlify.app/](https://nervous-panini-4ea298.netlify.app/)
+You can find a live version of the site here : [https://rss-react-reader.netlify.app/](https://rss-react-reader.netlify.app/)
 
 Create-React-App boilerplate README below...
 
