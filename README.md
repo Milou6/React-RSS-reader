@@ -1,3 +1,13 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/b72de571-8c9f-4b7b-ac7d-788bdcfe1d63/deploy-status)](https://app.netlify.com/sites/nervous-panini-4ea298/deploys)
+
+# RSS reader (built with React)
+
+This RSS reader is a small project, that I built to practice my React skills.
+
+You can find a live version of the site here : [https://nervous-panini-4ea298.netlify.app/](https://nervous-panini-4ea298.netlify.app/)
+
+Create-React-App boilerplate README below...
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
