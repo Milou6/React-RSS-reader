@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { MyContext } from './Context';
 
 function Item({ data }) {
   const [showDescription, setShowDescription] = useState(false);
+  const { show, toggleShow } = useContext(MyContext);
 
   const onHover = () => {
-    setShowDescription(!showDescription);
+    // setShowDescription(!showDescription);
+    setShowDescription(true);
   };
   const onHoverOut = () => {
     setShowDescription(false);
@@ -25,12 +28,12 @@ function Item({ data }) {
           >
             Link
           </a>
-          <span>{data.title.replace('&amp;', '&')}</span>
         </div>
+        <div className='display-item-title'>{data.title.replace('&amp;', '&')}</div>
         <span className='display-item-arrow'>▼</span>
       </span>
 
-      {showDescription && (
+      {(show || showDescription) && (
         <div
           className='display-item-description'
           dangerouslySetInnerHTML={{ __html: data.description }}

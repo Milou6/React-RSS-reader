@@ -1,6 +1,6 @@
 import { FaTimesCircle } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
-import { Scrollbars } from 'react-custom-scrollbars';
+// import { Scrollbars } from 'react-custom-scrollbars';
 
 function UserFeeds({ feeds, displayedFeed, switchDisplayedFeed, deleteFeed }) {
   // console.log(feeds);
@@ -28,15 +28,13 @@ function UserFeeds({ feeds, displayedFeed, switchDisplayedFeed, deleteFeed }) {
 
   if (feeds.length > 0) {
     return (
-      <>
+      <div>
         {feeds.length > 0 ? (
-          <Scrollbars autoHeight className='user-feeds-scrollbar' style={{ width: 1100 }}>
             <ul className='br10 user-feeds'>{feedList}</ul>
-          </Scrollbars>
         ) : (
           <ul className='br10 user-feeds'></ul>
         )}
-      </>
+      </div>
     );
   } else {
     return <ul className='gradient2 user-feeds'></ul>;

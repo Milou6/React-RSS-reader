@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Item from './Item';
-import { Scrollbars } from 'react-custom-scrollbars';
+import { MyContext } from './Context';
+// import { Scrollbars } from 'react-custom-scrollbars';
 // import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 
 function FeedDisplay({ feed }) {
@@ -12,6 +13,12 @@ function FeedDisplay({ feed }) {
   //   setShowDescription(!showDescription);
   // };
 
+  // const [show, setShow] = useState(false);
+  // const toggleShow = () => {
+  //   console.log('toggle theme!');
+  //   setShow(!show);
+  // };
+
   let feedList = [];
   if (feed) {
     feedList = feed.items.map((item) => <Item key={item.guid} data={item} />);
@@ -19,11 +26,11 @@ function FeedDisplay({ feed }) {
 
   return (
     <div className='feed-display br10'>
-      <Scrollbars className='user-feeds-scrollbar' style={{ width: 1000, height: 600 }}>
-        {/* <OverlayScrollbarsComponent> */}
-        <ul>{feedList.length > 0 ? feedList : <li>Waiting for feed item data...</li>}</ul>
-        {/* </OverlayScrollbarsComponent> */}
-      </Scrollbars>
+      {/* <Scrollbars className='user-feeds-scrollbar' style={{ width: 1000, height: 600 }}> */}
+      {/* <OverlayScrollbarsComponent> */}
+      <ul>{feedList.length > 0 ? feedList : <li>Waiting for feed item data...</li>}</ul>
+      {/* </OverlayScrollbarsComponent> */}
+      {/* </Scrollbars> */}
     </div>
   );
 }

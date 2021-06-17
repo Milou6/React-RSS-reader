@@ -26,6 +26,10 @@ input {
   background-color: #ffb800;
 }
 
+.flex {
+  display: flex;
+}
+
 .btn {
   border: none;
   font-weight: bold;
@@ -35,6 +39,17 @@ input {
 
 .btn:hover {
   cursor: pointer;
+}
+
+/* ========================================================================== */
+/* Settings Menu */
+/* ========================================================================== */
+.settings-menu {
+  border-radius: 10px;
+  background-color: white;
+  filter: drop-shadow(0px 0px 10px rgba(51, 152, 211, 0.25));
+  padding: 20px 20px;
+  margin: 50px 10px;
 }
 
 /* ========================================================================== */
@@ -67,6 +82,7 @@ input {
 .add-feed-btn:hover {
   color: #ffb800;
   background-color: white;
+  outline: 2px solid #ffb800;
 }
 
 .active-feed {
@@ -79,12 +95,14 @@ input {
 .user-feeds {
   display: flex;
   align-items: center;
-  width: max-content;
+  align-self: flex-end;
+  width: 80vw;
   height: 2rem;
   padding: 20px 20px;
   margin: 15px 15px;
   font-size: 1.5rem;
-  overflow: hidden;
+  overflow: auto;
+  overflow-y: hidden;
   background-color: white;
   filter: drop-shadow(0px 0px 10px rgba(51, 152, 211, 0.25));
 }
@@ -112,6 +130,7 @@ input {
 .user-feeds-item:hover {
   background-color: white;
   color: #1291b3;
+  outline: 2px solid #1291b3;
 }
 
 .delete-btn {
@@ -136,7 +155,7 @@ input {
   align-self: start;
   /* justify-content: center; */
   height: 90vh;
-  overflow: hidden;
+  overflow: scroll;
   width: 80vw;
   margin-top: 50px;
   padding: 0 0;
@@ -180,6 +199,10 @@ input {
 .display-item:hover .display-item-arrow {
   color: #ffb800;
   font-size: 2.2rem;
+}
+
+.display-item-title {
+  width: 100%;
 }
 
 .display-item a {

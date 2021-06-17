@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import AddFeedMenu from './components-reader/AddFeedMenu';
 import FeedDisplay from './components-reader/FeedDisplay';
 import UserFeeds from './components-reader/UserFeeds';
+import SettingsMenu from './components-reader/SettingsMenu';
+import { MyContext } from './components-reader/Context';
 
 // https://cors-anywhere.herokuapp.com/
 
@@ -101,8 +103,14 @@ function App() {
     setDisplayedFeed(feedIndex);
   };
 
+  const [show, setShow] = useState(false);
+  const toggleShow = () => {
+    console.log('toggle theme!');
+    setShow(!show);
+  };
+
   return (
-    <>
+    <MyContext.Provider value={{ show, toggleShow }}>
       <AddFeedMenu onAdd={addFeed} />
       {fetchedData.length > 0 ? (
         <UserFeeds
@@ -114,12 +122,15 @@ function App() {
       ) : (
         <p>Loading your feeds...</p>
       )}
-      {fetchedData.length > 0 ? (
-        <FeedDisplay feed={fetchedData[displayedFeed]} />
-      ) : (
-        <p>Nothing to show!!</p>
-      )}
-    </>
+      <div className='flex'>
+        {fetchedData.length > 0 ? (
+          <FeedDisplay feed={fetchedData[displayedFeed]} />
+        ) : (
+          <p>Nothing to show!!</p>
+        )}
+        <SettingsMenu />
+      </div>
+    </MyContext.Provider>
   );
 }
 // https://cors-anywhere.herokuapp.com/
