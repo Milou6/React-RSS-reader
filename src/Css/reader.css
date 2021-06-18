@@ -2,7 +2,6 @@
 /* GENERAL */
 /* ========================================================================== */
 html {
-  background-color: #f3fbff;
   font-size: 62.5%;
   font-family: "Roboto", sans-serif;
 }
@@ -46,10 +45,18 @@ input {
 /* ========================================================================== */
 .settings-menu {
   border-radius: 10px;
-  background-color: white;
   filter: drop-shadow(0px 0px 10px rgba(51, 152, 211, 0.25));
   padding: 20px 20px;
   margin: 50px 10px;
+}
+.settings-menu label {
+  width: 100%;
+}
+
+.settings-menu-item {
+  display: flex;
+  justify-content: space-between;
+  white-space: nowrap;
 }
 
 /* ========================================================================== */
@@ -62,7 +69,6 @@ input {
   height: 50px;
   width: 80vw;
   padding: 20px 50px;
-  background-color: white;
   filter: drop-shadow(0px 0px 10px rgba(51, 152, 211, 0.25));
 }
 
@@ -103,7 +109,6 @@ input {
   font-size: 1.5rem;
   overflow: auto;
   overflow-y: hidden;
-  background-color: white;
   filter: drop-shadow(0px 0px 10px rgba(51, 152, 211, 0.25));
 }
 
@@ -159,7 +164,6 @@ input {
   width: 80vw;
   margin-top: 50px;
   padding: 0 0;
-  background-color: white;
   filter: drop-shadow(0px 0px 30px rgba(51, 152, 211, 0.25));
 }
 
@@ -178,7 +182,6 @@ input {
   padding: 15px 5px;
   margin: 10px 0;
   border-radius: 10px;
-  background-color: #d0efff;
 }
 
 .display-item-header {
@@ -187,7 +190,6 @@ input {
   text-decoration: none;
   font-weight: bold;
   font-size: 2rem;
-  color: #1d2d31;
   padding: 0 0;
   margin: 0 0;
 }
@@ -236,4 +238,33 @@ input {
 
 .display-item-description img {
   max-width: 40rem;
+}
+
+/* ========================================================================== */
+/* Light/Dark Themes */
+/* ========================================================================== */
+.light-background {
+  background-color: #f3fbff;
+}
+
+.light-card1 {
+  background-color: #ffffff;
+}
+
+.light-card2 {
+  background-color: #d0efff;
+}
+
+.dark-background {
+  background-color: #3c3c3c;
+}
+
+.dark-card1 {
+  background-color: #2b2b2b;
+  color: white;
+}
+
+.dark-card2 {
+  background-color: #5c6466;
+  color: white;
 }

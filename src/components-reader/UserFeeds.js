@@ -1,9 +1,13 @@
+import { useContext } from 'react';
 import { FaTimesCircle } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
+import { ThemeContext } from './Context';
 // import { Scrollbars } from 'react-custom-scrollbars';
 
 function UserFeeds({ feeds, displayedFeed, switchDisplayedFeed, deleteFeed }) {
   // console.log(feeds);
+
+  const { theme } = useContext(ThemeContext);
 
   let feedList = [];
   if (feeds.length > 0) {
@@ -30,7 +34,7 @@ function UserFeeds({ feeds, displayedFeed, switchDisplayedFeed, deleteFeed }) {
     return (
       <div>
         {feeds.length > 0 ? (
-            <ul className='br10 user-feeds'>{feedList}</ul>
+          <ul className={`br10 user-feeds ${theme.card1}`}>{feedList}</ul>
         ) : (
           <ul className='br10 user-feeds'></ul>
         )}

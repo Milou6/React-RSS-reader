@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { MyContext } from './Context';
+import { ThemeContext, MyContext } from './Context';
 
 function SettingsMenu() {
   // const [show, setShow] = useState(false);
@@ -8,19 +8,29 @@ function SettingsMenu() {
   //   setShow(!show);
   // };
 
-  const { show, toggleShow } = useContext(MyContext);
+  const { toggleShow } = useContext(MyContext);
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
-  const handleChange = (e) => {
-    // console.log(e);
+  const handleChangeShow = (e) => {
     console.log(e.target.checked);
     toggleShow();
   };
 
+  const handleChangeTheme = () => {
+    toggleTheme();
+  };
+
   return (
-    <div className='settings-menu'>
+    <div className={`settings-menu ${theme.card1}`}>
       <form>
-        <input type='checkbox' id='showItemDescriptions' onChange={(e) => handleChange(e)} />
-        <label for='showItemDescriptions'>Show Feed Descriptions</label>
+        <div className='settings-menu-item'>
+          <input type='checkbox' id='darkModeToggle' onChange={() => handleChangeTheme()} />
+          <label htmlFor='darkModeToggle'>Dark mode</label>
+        </div>
+        <div className='settings-menu-item'>
+          <input type='checkbox' id='showItemDescriptions' onChange={(e) => handleChangeShow(e)} />
+          <label htmlFor='showItemDescriptions'>Show feed descriptions</label>
+        </div>
       </form>
     </div>
   );

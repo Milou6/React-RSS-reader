@@ -1,9 +1,10 @@
 import { useState, useContext } from 'react';
-import { MyContext } from './Context';
+import { ThemeContext, MyContext } from './Context';
 
 function Item({ data }) {
   const [showDescription, setShowDescription] = useState(false);
   const { show, toggleShow } = useContext(MyContext);
+  const { theme } = useContext(ThemeContext);
 
   const onHover = () => {
     // setShowDescription(!showDescription);
@@ -13,11 +14,12 @@ function Item({ data }) {
     setShowDescription(false);
   };
 
-  // onClick={setShowDescription(!showDescription)}
-  // onMouseLeave={onHoverOut}
-
   return (
-    <li className='display-item box-g2' onClick={onHover} onMouseLeave={onHoverOut}>
+    <li
+      className={`display-item box-g2 ${theme.card2}`}
+      onClick={onHover}
+      onMouseLeave={onHoverOut}
+    >
       <span className='display-item-header'>
         <div>
           <a
@@ -29,7 +31,9 @@ function Item({ data }) {
             Link
           </a>
         </div>
-        <div className='display-item-title'>{data.title.replace('&amp;', '&')}</div>
+        <div className={`display-item-title ${theme.card2}`}>
+          {data.title.replace('&amp;', '&')}
+        </div>
         <span className='display-item-arrow'>▼</span>
       </span>
 

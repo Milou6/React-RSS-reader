@@ -1,12 +1,13 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import AddFeedMenu from './components-reader/AddFeedMenu';
 import FeedDisplay from './components-reader/FeedDisplay';
 import UserFeeds from './components-reader/UserFeeds';
 import SettingsMenu from './components-reader/SettingsMenu';
-import { MyContext } from './components-reader/Context';
+import { MyContext, ThemeContext, themes } from './components-reader/Context';
 
 // https://cors-anywhere.herokuapp.com/
 
+// Local Storage is used to keep track of a user's saved feeds
 const localStorage = window.localStorage;
 
 function App() {
@@ -28,7 +29,15 @@ function App() {
         }
       }
       // console.log(reloadedFeeds);
-      setFetchedData([...fetchedData, ...reloadedFeeds]);
+      await setFetchedData([...fetchedData, ...reloadedFeeds]);
+
+      // Finally, if localStorage was empty, add a default The Guardian RSS feed to it
+      // This way the User doesn't see an empty site at 1st
+      if (localStorage.length === 0) {
+        let feed = await fetchFeedFromUrl('https://www.theguardian.com/international/rss');
+        localStorage.setItem('https://www.theguardian.com/international/rss', 1);
+        setFetchedData([feed]);
+      }
     };
     reAddSavedFeeds();
   }, []);
@@ -105,32 +114,42 @@ function App() {
 
   const [show, setShow] = useState(false);
   const toggleShow = () => {
-    console.log('toggle theme!');
+    console.log('toggle show!');
     setShow(!show);
   };
 
+  const [theme, setTheme] = useState(themes.light);
+  const toggleTheme = () => {
+    console.log('toggle theme!');
+    setTheme(theme === themes.dark ? themes.light : themes.dark);
+  };
+
   return (
-    <MyContext.Provider value={{ show, toggleShow }}>
-      <AddFeedMenu onAdd={addFeed} />
-      {fetchedData.length > 0 ? (
-        <UserFeeds
-          feeds={fetchedData}
-          displayedFeed={displayedFeed}
-          switchDisplayedFeed={switchDisplayedFeed}
-          deleteFeed={deleteFeed}
-        />
-      ) : (
-        <p>Loading your feeds...</p>
-      )}
-      <div className='flex'>
-        {fetchedData.length > 0 ? (
-          <FeedDisplay feed={fetchedData[displayedFeed]} />
-        ) : (
-          <p>Nothing to show!!</p>
-        )}
-        <SettingsMenu />
-      </div>
-    </MyContext.Provider>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      <MyContext.Provider value={{ show, toggleShow }}>
+        <div className={theme.background}>
+          <AddFeedMenu onAdd={addFeed} />
+          {fetchedData.length > 0 ? (
+            <UserFeeds
+              feeds={fetchedData}
+              displayedFeed={displayedFeed}
+              switchDisplayedFeed={switchDisplayedFeed}
+              deleteFeed={deleteFeed}
+            />
+          ) : (
+            <p>Loading your feeds...</p>
+          )}
+          <div className='flex'>
+            {fetchedData.length > 0 ? (
+              <FeedDisplay feed={fetchedData[displayedFeed]} />
+            ) : (
+              <p>Nothing to show!!</p>
+            )}
+            <SettingsMenu />
+          </div>
+        </div>
+      </MyContext.Provider>
+    </ThemeContext.Provider>
   );
 }
 // https://cors-anywhere.herokuapp.com/
