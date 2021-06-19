@@ -127,7 +127,7 @@ function App() {
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <MyContext.Provider value={{ show, toggleShow }}>
-        <div className={theme.background}>
+        <div className={`app-container ${theme.background}`}>
           <AddFeedMenu onAdd={addFeed} />
           {fetchedData.length > 0 ? (
             <UserFeeds
@@ -139,7 +139,7 @@ function App() {
           ) : (
             <p>Loading your feeds...</p>
           )}
-          <div className='flex'>
+          <div className='flex bottom-container'>
             {fetchedData.length > 0 ? (
               <FeedDisplay feed={fetchedData[displayedFeed]} />
             ) : (
