@@ -22,10 +22,13 @@ function App() {
       let reloadedFeeds = [];
       // for each url saved, reload it into display by calling addFeed()
       for (let i = 0; i < localStorage.length; i++) {
-        let feed = await fetchFeedFromUrl(localStorage.key(i));
-        // CHECKING THAT THE FEED != undefined
-        if (feed) {
-          reloadedFeeds.push(feed);
+        let key = localStorage.key(i);
+        if (key !== 'theme') {
+          let feed = await fetchFeedFromUrl(key);
+          // CHECKING THAT THE FEED != undefined
+          if (feed) {
+            reloadedFeeds.push(feed);
+          }
         }
       }
       // console.log(reloadedFeeds);
@@ -40,6 +43,13 @@ function App() {
       }
     };
     reAddSavedFeeds();
+  }, []);
+
+  useEffect(() => {
+    let currentTheme = localStorage.getItem('theme');
+    if (currentTheme === 'dark') {
+      setTheme(themes.dark);
+    }
   }, []);
 
   // Fetch feed from url
@@ -121,6 +131,7 @@ function App() {
   const [theme, setTheme] = useState(themes.light);
   const toggleTheme = () => {
     console.log('toggle theme!');
+    localStorage.setItem('theme', theme === themes.dark ? 'light' : 'dark');
     setTheme(theme === themes.dark ? themes.light : themes.dark);
   };
 

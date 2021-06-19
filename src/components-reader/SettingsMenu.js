@@ -1,13 +1,7 @@
-import { useContext, useState } from 'react';
-import { ThemeContext, MyContext } from './Context';
+import { useContext, useEffect, useState } from 'react';
+import { ThemeContext, MyContext, themes } from './Context';
 
 function SettingsMenu() {
-  // const [show, setShow] = useState(false);
-  // const toggleShow = () => {
-  //   console.log('toggle theme!');
-  //   setShow(!show);
-  // };
-
   const { toggleShow } = useContext(MyContext);
   const { theme, toggleTheme } = useContext(ThemeContext);
 
@@ -24,7 +18,12 @@ function SettingsMenu() {
     <div className={`settings-menu ${theme.card1}`}>
       <form>
         <div className='settings-menu-item'>
-          <input type='checkbox' id='darkModeToggle' onChange={() => handleChangeTheme()} />
+          <input
+            type='checkbox'
+            id='darkModeToggle'
+            checked={theme === themes.dark ? true : false}
+            onChange={() => handleChangeTheme()}
+          />
           <label htmlFor='darkModeToggle'>Dark mode</label>
         </div>
         <div className='settings-menu-item'>
