@@ -1,30 +1,25 @@
-import { useContext, useEffect, useState } from 'react';
-import { ThemeContext, MyContext, themes } from './Context';
+import { useContext } from 'react'
+import { MyContext } from './Context'
+// Redux imports
+import { useSelector, useDispatch } from 'react-redux'
+import { toggleTheme2 } from '../features/theme/themeSlice'
 
 function SettingsMenu() {
-  const { toggleShow } = useContext(MyContext);
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { toggleShow } = useContext(MyContext)
+
+  const themeRedux = useSelector((state) => state.theme)
+  const dispatch = useDispatch()
 
   const handleChangeShow = (e) => {
-    console.log(e.target.checked);
-    toggleShow();
-  };
-
-  const handleChangeTheme = () => {
-    toggleTheme();
-  };
+    toggleShow()
+  }
 
   return (
-    <div className={`settings-menu ${theme.card1}`}>
+    <div className={`settings-menu ${themeRedux.card1}`}>
       <form>
         <div className='settings-menu-item'>
-          <input
-            type='checkbox'
-            id='darkModeToggle'
-            checked={theme === themes.dark ? true : false}
-            onChange={() => handleChangeTheme()}
-          />
-          <label htmlFor='darkModeToggle'>Dark mode</label>
+          <input type='checkbox' id='toggleDark' checked={themeRedux.value === 'light' ? false : true} onChange={() => dispatch(toggleTheme2())} />
+          <label htmlFor='toggleDark'>Dark mode</label>
         </div>
         <div className='settings-menu-item'>
           <input type='checkbox' id='showItemDescriptions' onChange={(e) => handleChangeShow(e)} />
@@ -32,7 +27,7 @@ function SettingsMenu() {
         </div>
       </form>
     </div>
-  );
+  )
 }
 
-export default SettingsMenu;
+export default SettingsMenu

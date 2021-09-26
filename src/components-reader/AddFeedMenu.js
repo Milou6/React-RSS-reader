@@ -1,35 +1,32 @@
-import { useState, useEffect, useContext } from 'react';
-import { ThemeContext } from './Context';
+import { useState } from 'react'
+
+import { useSelector } from 'react-redux'
 
 function AddFeedMenu({ onAdd }) {
-  const [url, setUrl] = useState('');
-  const { theme } = useContext(ThemeContext);
+  const [url, setUrl] = useState('')
+
+  const themeRedux = useSelector((state) => state.theme)
 
   const onSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (!url) {
-      alert('Please choose a URL to add to your RSS feed!');
-      return;
+      alert('Please choose a URL to add to your RSS feed!')
+      return
     }
-    onAdd(url);
+    onAdd(url)
     // reset field to placeholder
-    setUrl('');
-  };
+    setUrl('')
+  }
 
   return (
-    <form className={`add-feed-menu br10 ${theme.card1}`} onSubmit={onSubmit}>
+    <form className={`add-feed-menu br10 ${themeRedux.card1}`} onSubmit={onSubmit}>
       {/* <label>RSS URL:</label> */}
-      <input
-        type='text'
-        placeholder='https://my-favorite-feed/rss'
-        value={url}
-        onChange={(e) => setUrl(e.target.value)}
-      />
+      <input type='text' placeholder='https://my-favorite-feed/rss' value={url} onChange={(e) => setUrl(e.target.value)} />
 
       <input type='submit' value='Add to Feed' className='btn accent add-feed-btn' />
     </form>
-  );
+  )
 }
 
-export default AddFeedMenu;
+export default AddFeedMenu

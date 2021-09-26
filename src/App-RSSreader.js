@@ -1,171 +1,118 @@
-import { useState, useEffect } from 'react';
-import AddFeedMenu from './components-reader/AddFeedMenu';
-import FeedDisplay from './components-reader/FeedDisplay';
-import UserFeeds from './components-reader/UserFeeds';
-import SettingsMenu from './components-reader/SettingsMenu';
-import { MyContext, ThemeContext, themes } from './components-reader/Context';
-
-// https://cors-anywhere.herokuapp.com/
+import { useState, useEffect } from 'react'
+import AddFeedMenu from './components-reader/AddFeedMenu'
+import FeedDisplay from './components-reader/FeedDisplay'
+import UserFeeds from './components-reader/UserFeeds'
+import SettingsMenu from './components-reader/SettingsMenu'
+import { MyContext } from './components-reader/Context'
+// Redux imports
+import { useSelector, useDispatch } from 'react-redux'
+import { feedAdded, feedRemoved, setFeedIndex, selectFeeds, selectFeedIndex } from './features/feedsApi/feedsSlice'
+import { setThemeTo } from './features/theme/themeSlice'
 
 // Local Storage is used to keep track of a user's saved feeds
-const localStorage = window.localStorage;
+const localStorage = window.localStorage
 
 function App() {
-  const [fetchedData, setFetchedData] = useState([]);
-  const [displayedFeed, setDisplayedFeed] = useState(0);
+  const userFeeds = useSelector(selectFeeds)
+  const currentFeedIndex = useSelector(selectFeedIndex)
+  const themeRedux = useSelector((state) => state.theme)
 
-  // On page load, check if user already has feeds in local storage
-  useEffect(() => {
-    setFetchedData([]);
-
-    const reAddSavedFeeds = async () => {
-      let reloadedFeeds = [];
-      // for each url saved, reload it into display by calling addFeed()
-      for (let i = 0; i < localStorage.length; i++) {
-        let key = localStorage.key(i);
-        if (key !== 'theme') {
-          let feed = await fetchFeedFromUrl(key);
-          // CHECKING THAT THE FEED != undefined
-          if (feed) {
-            reloadedFeeds.push(feed);
-          }
-        }
-      }
-      // console.log(reloadedFeeds);
-      await setFetchedData([...fetchedData, ...reloadedFeeds]);
-
-      // Finally, if localStorage was empty, add a default The Guardian RSS feed to it
-      // This way the User doesn't see an empty site at 1st
-      if (localStorage.length === 0) {
-        let feed = await fetchFeedFromUrl('https://www.theguardian.com/international/rss');
-        localStorage.setItem('https://www.theguardian.com/international/rss', 1);
-        setFetchedData([feed]);
-      }
-    };
-    reAddSavedFeeds();
-  }, []);
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    let currentTheme = localStorage.getItem('theme');
-    if (currentTheme === 'dark') {
-      setTheme(themes.dark);
+    let currentTheme = localStorage.getItem('theme')
+    if (currentTheme === 'dark' || currentTheme === 'light') {
+      dispatch(setThemeTo(currentTheme))
     }
-  }, []);
+  }, [dispatch])
 
-  // Fetch feed from url
+  // Activate a netlify function to get an RSS feed (using rss2json as a proxy)
   async function fetchFeedFromUrl(url) {
     try {
       // 💯 USING NETLIFY FUNCTIONS TO FETCH RSS FEED WITHOUT LEAKING API KEY
-      const request = await fetch(`/.netlify/functions/fetchfeed?url=${url}`);
+      const request = await fetch(`/.netlify/functions/fetchfeed?url=${url}&offset=0`)
       // console.log(request);
 
       // If request failed, we do an early return!
       if (request.status !== 200) {
-        alert(
-          "Couldn't fetch feed from the URL provided. \n\nPlease check whether inputting the URL on https://rss2json.com gives a valid JSON."
-        );
-        throw new Error(request.statusText);
+        alert("Couldn't fetch feed from the URL provided. \n\nPlease check whether inputting the URL on https://rss2json.com gives a valid JSON.")
+        throw new Error(request.statusText)
       }
 
-      const json = await request.json();
-      // console.log(json);
-      return json;
+      const json = await request.json()
+      return json
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   }
 
-  // Add a feed to the App state
+  // Add a feed to the App state (✨ passed down to AddFeedMenu)
   const addFeed = async (url) => {
     if (!localStorage.getItem(url)) {
-      const response = await fetchFeedFromUrl(url);
+      const response = await fetchFeedFromUrl(url)
 
       // If fetch failed, block below won't execute
       if (response) {
-        setFetchedData([...fetchedData, response]);
+        dispatch(feedAdded(response))
         // set URL into local storage
-        localStorage.setItem(url, 1);
+        localStorage.setItem(url, 1)
         // Switch to newly added feed
-        setDisplayedFeed(fetchedData.length);
+        dispatch(setFeedIndex(userFeeds.length))
       }
     } else {
-      alert('This feed is already on your display!');
+      alert('This feed is already on your display!')
     }
-  };
+  }
 
   // Delete a feed from the App state
   const deleteFeed = async (e, title, url) => {
     // console.log(e);
-    console.log(title);
+    console.log(title)
 
-    setFetchedData(fetchedData.filter((feed) => feed.feed.title !== title));
-    localStorage.removeItem(url);
+    dispatch(feedRemoved(url))
+    localStorage.removeItem(url)
 
-    console.log(`switch displayed-feed : ${fetchedData.length - 1}`);
-    setDisplayedFeed(fetchedData.length - 2); // Gotta do minus 2 to get last feed added!
-  };
+    console.log(`switch displayed-feed : ${userFeeds.length - 2}`)
+    dispatch(setFeedIndex(userFeeds.length - 2))
+  }
 
   // Switch the feed to be displayed
   const switchDisplayedFeed = (e, feedUrl) => {
-    console.log(e);
-
     // find the feed that matches title of button clicked
-    let feedIndex = -1;
-    fetchedData.forEach((elm, index) => {
-      // if (elm.feed.title === e.target.innerHTML) feedIndex = index;
+    let feedIndex = -1
+    userFeeds.forEach((elm, index) => {
       if (elm.feed.url === feedUrl) {
-        feedIndex = index;
+        feedIndex = index
       }
-    });
-    if (feedIndex === -1) throw new Error('Feed requested not found!');
+    })
+    if (feedIndex === -1) throw new Error('Feed requested not found!')
     // set the State var to update the displayed feed
-    setDisplayedFeed(feedIndex);
-  };
+    dispatch(setFeedIndex(feedIndex))
+  }
 
-  const [show, setShow] = useState(false);
+  // ✨ Context toggle
+  const [show, setShow] = useState(false)
   const toggleShow = () => {
-    console.log('toggle show!');
-    setShow(!show);
-  };
-
-  const [theme, setTheme] = useState(themes.light);
-  const toggleTheme = () => {
-    console.log('toggle theme!');
-    localStorage.setItem('theme', theme === themes.dark ? 'light' : 'dark');
-    setTheme(theme === themes.dark ? themes.light : themes.dark);
-  };
+    setShow(!show)
+  }
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <MyContext.Provider value={{ show, toggleShow }}>
-        <div className={`app-container ${theme.background}`}>
-          <AddFeedMenu onAdd={addFeed} />
-          {fetchedData.length > 0 ? (
-            <UserFeeds
-              feeds={fetchedData}
-              displayedFeed={displayedFeed}
-              switchDisplayedFeed={switchDisplayedFeed}
-              deleteFeed={deleteFeed}
-            />
-          ) : (
-            <p>Loading your feeds...</p>
-          )}
-          <div className='flex bottom-container'>
-            {fetchedData.length > 0 ? (
-              <FeedDisplay feed={fetchedData[displayedFeed]} />
-            ) : (
-              <p>Nothing to show!!</p>
-            )}
-            <SettingsMenu />
-          </div>
+    <MyContext.Provider value={{ show, toggleShow }}>
+      <div className={`app-container ${themeRedux.background}`}>
+        <AddFeedMenu onAdd={addFeed} />
+        <UserFeeds feeds={userFeeds} displayedFeed={currentFeedIndex} switchDisplayedFeed={switchDisplayedFeed} deleteFeed={deleteFeed} />
+        <div className='flex bottom-container'>
+          <FeedDisplay feed={userFeeds[currentFeedIndex]} />
+          <SettingsMenu />
         </div>
-      </MyContext.Provider>
-    </ThemeContext.Provider>
-  );
+      </div>
+    </MyContext.Provider>
+  )
 }
-// https://cors-anywhere.herokuapp.com/
+
 // http://www.reddit.com/.rss
 // https://www.theguardian.com/international/rss
 // https://lifehacker.com/rss
 // http://rss.cnn.com/rss/edition.rss
-export default App;
+
+export default App

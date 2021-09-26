@@ -1,40 +1,42 @@
-import { useState, useContext } from 'react';
-import Item from './Item';
-import { ThemeContext } from './Context';
+import Item from './Item'
 // import { Scrollbars } from 'react-custom-scrollbars';
 // import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 
+import { useSelector, useDispatch } from 'react-redux'
+import { feedLoadMore } from '../features/feedsApi/feedsSlice'
+
 function FeedDisplay({ feed }) {
-  // const [items, setItems] = useState([]);
+  const themeRedux = useSelector((state) => state.theme)
+  const dispatch = useDispatch()
 
-  // const [showDescription, setShowDescription] = useState(false);
+  // ✨✨✨
+  // const postStatus = useSelector(state => state.posts.status)
+  // const error = useSelector(state => state.posts.error)
 
-  // const onHover = () => {
-  //   setShowDescription(!showDescription);
-  // };
+  const handleLoadMore = (e, feed) => {
+    console.log(e.target)
+    // let feedLength = feed.length
+    // console.log(feedLength)
+    dispatch(feedLoadMore(e.target))
+  }
 
-  // const [show, setShow] = useState(false);
-  // const toggleShow = () => {
-  //   console.log('toggle theme!');
-  //   setShow(!show);
-  // };
-
-  const { theme } = useContext(ThemeContext);
-
-  let feedList = [];
+  let feedList = []
   if (feed) {
-    feedList = feed.items.map((item) => <Item key={item.guid} data={item} />);
+    feedList = feed.items.map((item) => <Item key={item.guid} data={item} />)
   }
 
   return (
-    <div className={`feed-display br10 ${theme.card1}`}>
+    <div className={`feed-display br10 ${themeRedux.card1}`}>
       {/* <Scrollbars className='user-feeds-scrollbar' style={{ width: 1000, height: 600 }}> */}
       {/* <OverlayScrollbarsComponent> */}
-      <ul>{feedList.length > 0 ? feedList : <li>Waiting for feed item data...</li>}</ul>
+      <ul>{feedList.length > 0 ? feedList : <li>No feed to display. Try to add an RSS link above!</li>}</ul>
       {/* </OverlayScrollbarsComponent> */}
       {/* </Scrollbars> */}
+      <button onClick={(e, feed) => handleLoadMore(e, feed)} disabled={feed && feed.feed.isComplete}>
+        {feed && feed.feed.isComplete ? 'No more feeds to load' : 'Load more'}
+      </button>
     </div>
-  );
+  )
 }
 
-export default FeedDisplay;
+export default FeedDisplay

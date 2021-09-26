@@ -1,9 +1,14 @@
 /* ========================================================================== */
 /* GENERAL */
 /* ========================================================================== */
+* {
+  transition: background-color 1s;
+}
+
 html {
   font-size: 62.5%;
   font-family: "Roboto", sans-serif;
+  transition: background-color 3s ease-in-out;
 }
 
 body {
