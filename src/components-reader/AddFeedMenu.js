@@ -1,11 +1,15 @@
 import { useState } from 'react'
 
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { feedAdded, setFeedIndex, selectFeeds } from '../features/feedsApi/feedsSlice'
+import { fetchFeedFromUrl } from '../utils/fetchFeeds'
 
-function AddFeedMenu({ onAdd }) {
+function AddFeedMenu() {
   const [url, setUrl] = useState('')
 
   const themeRedux = useSelector((state) => state.theme)
+  const userFeeds = useSelector(selectFeeds)
+  const dispatch = useDispatch()
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -14,9 +18,27 @@ function AddFeedMenu({ onAdd }) {
       alert('Please choose a URL to add to your RSS feed!')
       return
     }
-    onAdd(url)
+    addFeed(url)
     // reset field to placeholder
     setUrl('')
+  }
+
+  // Add a feed to the App state (✨ passed down to AddFeedMenu)
+  const addFeed = async (url) => {
+    if (localStorage.getItem(url)) {
+      alert('This feed is already on your display!')
+      return
+    }
+
+    const response = await fetchFeedFromUrl(url)
+    // If fetch failed, block below won't execute
+    if (response) {
+      dispatch(feedAdded(response))
+      // set URL into local storage
+      localStorage.setItem(url, 'RSSFeed')
+      // Switch to newly added feed
+      dispatch(setFeedIndex(userFeeds.length))
+    }
   }
 
   return (

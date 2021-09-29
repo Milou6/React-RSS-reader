@@ -5,7 +5,8 @@ const initialState = {
   feeds: [],
   status: 'idle',
   error: null,
-  currentFeedIndex: 0
+  currentFeedIndex: 0,
+  showFeedDetails: false
 }
 
 const localStorage = window.localStorage
@@ -13,10 +14,19 @@ export const fetchFeedsFromLocalStorage = createAsyncThunk('feeds/fetchFeedsFrom
   // for each url saved in LS, add it to our feedPromises array
   let feedPromises = []
   for (let i = 0; i < localStorage.length; i++) {
-    let key = localStorage.key(i)
-    if (key !== 'theme') {
-      feedPromises.push(fetch(`/.netlify/functions/fetchfeed?url=${key}&offset=0`).then((response) => response.json()))
+    let itemKey = localStorage.key(i)
+    let itemValue = localStorage.getItem(itemKey)
+    if (itemValue === 'RSSFeed') {
+      feedPromises.push(fetch(`/.netlify/functions/fetchfeed?url=${itemKey}&offset=0`).then((response) => response.json()))
     }
+  }
+
+  // If there is no feeds saved in localStorage, add default ones
+  if (feedPromises.length === 0) {
+    feedPromises.push(fetch(`/.netlify/functions/fetchfeed?url=https://www.theguardian.com/international/rss&offset=0`).then((response) => response.json()))
+    feedPromises.push(fetch(`/.netlify/functions/fetchfeed?url=https://lifehacker.com/rss&offset=0`).then((response) => response.json()))
+    localStorage.setItem('https://www.theguardian.com/international/rss', 'RSSFeed')
+    localStorage.setItem('https://lifehacker.com/rss', 'RSSFeed')
   }
 
   let feedResults = []
@@ -57,6 +67,20 @@ export const feedsSlice = createSlice({
     setFeedIndex: (state, action) => {
       state.currentFeedIndex = action.payload
       return state
+    },
+    toggleShowFeedDetails: (state) => {
+      state.showFeedDetails = !state.showFeedDetails
+      localStorage.setItem('RSSshowDetails', state.showFeedDetails)
+      return state
+    },
+    setShowFeedDetails: (state, action) => {
+      if (action.payload === 'true') {
+        state.showFeedDetails = true
+      } else if (action.payload === 'false') {
+        state.showFeedDetails = false
+      }
+      localStorage.setItem('RSSshowDetails', state.showFeedDetails)
+      return state
     }
   },
   extraReducers: (builder) => {
@@ -68,6 +92,7 @@ export const feedsSlice = createSlice({
         state.status = 'idle'
         state.feeds = action.payload
       })
+
       .addCase(feedLoadMore.pending, (state, action) => {
         // console.log(action)
       })
@@ -85,7 +110,7 @@ export const feedsSlice = createSlice({
   }
 })
 
-export const { feedAdded, feedRemoved, setFeedIndex } = feedsSlice.actions
+export const { feedAdded, feedRemoved, setFeedIndex, toggleShowFeedDetails, setShowFeedDetails } = feedsSlice.actions
 
 export const selectFeeds = (state) => state.feeds.feeds
 export const selectFeedIndex = (state) => state.feeds.currentFeedIndex

@@ -3,10 +3,13 @@ import Item from './Item'
 // import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 
 import { useSelector, useDispatch } from 'react-redux'
-import { feedLoadMore } from '../features/feedsApi/feedsSlice'
+import { selectFeeds, selectFeedIndex, feedLoadMore } from '../features/feedsApi/feedsSlice'
 
-function FeedDisplay({ feed }) {
+function FeedDisplay() {
   const themeRedux = useSelector((state) => state.theme)
+  const userFeeds = useSelector(selectFeeds)
+  const currentFeedIndex = useSelector(selectFeedIndex)
+  const currentlyDisplayedFeed = userFeeds[currentFeedIndex]
   const dispatch = useDispatch()
 
   // ✨✨✨
@@ -21,8 +24,8 @@ function FeedDisplay({ feed }) {
   }
 
   let feedList = []
-  if (feed) {
-    feedList = feed.items.map((item) => <Item key={item.guid} data={item} />)
+  if (currentlyDisplayedFeed) {
+    feedList = currentlyDisplayedFeed.items.map((item) => <Item key={item.guid} data={item} />)
   }
 
   return (
@@ -32,8 +35,8 @@ function FeedDisplay({ feed }) {
       <ul>{feedList.length > 0 ? feedList : <li>No feed to display. Try to add an RSS link above!</li>}</ul>
       {/* </OverlayScrollbarsComponent> */}
       {/* </Scrollbars> */}
-      <button onClick={(e, feed) => handleLoadMore(e, feed)} disabled={feed && feed.feed.isComplete}>
-        {feed && feed.feed.isComplete ? 'No more feeds to load' : 'Load more'}
+      <button onClick={(e, feed) => handleLoadMore(e, feed)} disabled={currentlyDisplayedFeed && currentlyDisplayedFeed.feed.isComplete}>
+        {currentlyDisplayedFeed && currentlyDisplayedFeed.feed.isComplete ? 'No more feeds to load' : 'Load more'}
       </button>
     </div>
   )

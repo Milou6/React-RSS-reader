@@ -1,13 +1,11 @@
-import { useState, useContext } from 'react'
-import { MyContext } from './Context'
-
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
 function Item({ data }) {
   const [showDescription, setShowDescription] = useState(false)
-  const { show } = useContext(MyContext)
 
   const themeRedux = useSelector((state) => state.theme)
+  const show = useSelector((state) => state.feeds.showFeedDetails)
 
   const onHover = () => {
     // setShowDescription(!showDescription);

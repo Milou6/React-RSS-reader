@@ -22,7 +22,7 @@ export const themeSlice = createSlice({
   name: 'theme',
   initialState,
   reducers: {
-    toggleTheme2: (state) => {
+    toggleTheme: (state) => {
       // state.value = state.value === 'light' ? 'dark' : 'light'
       state = state.value === 'light' ? darkState : lightState
       localStorage.setItem('theme', state.value)
@@ -41,6 +41,6 @@ export const themeSlice = createSlice({
   }
 })
 
-export const { toggleTheme2, setThemeTo } = themeSlice.actions
+export const { toggleTheme, setThemeTo } = themeSlice.actions
 
 export default themeSlice.reducer

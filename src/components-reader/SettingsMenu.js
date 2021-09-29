@@ -1,28 +1,22 @@
-import { useContext } from 'react'
-import { MyContext } from './Context'
 // Redux imports
 import { useSelector, useDispatch } from 'react-redux'
-import { toggleTheme2 } from '../features/theme/themeSlice'
+import { toggleTheme } from '../features/theme/themeSlice'
+import { toggleShowFeedDetails } from '../features/feedsApi/feedsSlice'
 
 function SettingsMenu() {
-  const { toggleShow } = useContext(MyContext)
-
   const themeRedux = useSelector((state) => state.theme)
+  const showFeedDetails = useSelector((state) => state.feeds.showFeedDetails)
   const dispatch = useDispatch()
-
-  const handleChangeShow = (e) => {
-    toggleShow()
-  }
 
   return (
     <div className={`settings-menu ${themeRedux.card1}`}>
       <form>
         <div className='settings-menu-item'>
-          <input type='checkbox' id='toggleDark' checked={themeRedux.value === 'light' ? false : true} onChange={() => dispatch(toggleTheme2())} />
+          <input type='checkbox' id='toggleDark' checked={themeRedux.value === 'light' ? false : true} onChange={() => dispatch(toggleTheme())} />
           <label htmlFor='toggleDark'>Dark mode</label>
         </div>
         <div className='settings-menu-item'>
-          <input type='checkbox' id='showItemDescriptions' onChange={(e) => handleChangeShow(e)} />
+          <input type='checkbox' id='showItemDescriptions' checked={showFeedDetails ? true : false} onChange={() => dispatch(toggleShowFeedDetails())} />
           <label htmlFor='showItemDescriptions'>Show feed descriptions</label>
         </div>
       </form>
