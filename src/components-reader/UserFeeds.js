@@ -3,6 +3,8 @@ import { FaTimesCircle } from 'react-icons/fa'
 // import { Scrollbars } from 'react-custom-scrollbars';
 import { useSelector, useDispatch } from 'react-redux'
 import { feedRemoved, setFeedIndex, selectFeeds, selectFeedIndex } from '../features/feedsApi/feedsSlice'
+// import { ClipLoader } from 'react-spinners/ClipLoader'
+import PulseLoader from 'react-spinners/PulseLoader'
 
 function UserFeeds() {
   // console.log(feeds);
@@ -53,10 +55,14 @@ function UserFeeds() {
   }
 
   if (userFeeds.length > 0) {
-    return <div>{userFeeds.length > 0 ? <ul className={`br10 user-feeds ${themeRedux.card1}`}>{feedList}</ul> : <ul className='br10 user-feeds'></ul>}</div>
+    return <>{userFeeds.length > 0 ? <ul className={`br10 user-feeds ${themeRedux.card1}`}>{feedList}</ul> : <ul className='br10 user-feeds'></ul>}</>
   } else {
-    // return <ul className='gradient2 user-feeds'></ul>;
-    return <ul className={`br10 user-feeds ${themeRedux.card1}`}>No feeds registered</ul>
+    // return <ul className={`br10 user-feeds ${themeRedux.card1}`}>No feeds registered</ul>
+    return (
+      <ul className={`br10 user-feeds centered ${themeRedux.card1}`}>
+        <PulseLoader color='#1291b3' loading={true} css='' size={15} />
+      </ul>
+    )
   }
 }
 

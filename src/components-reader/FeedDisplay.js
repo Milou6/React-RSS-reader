@@ -1,6 +1,7 @@
 import Item from './Item'
 // import { Scrollbars } from 'react-custom-scrollbars';
 // import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
+import PulseLoader from 'react-spinners/PulseLoader'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { selectFeeds, selectFeedIndex, feedLoadMore } from '../features/feedsApi/feedsSlice'
@@ -32,10 +33,10 @@ function FeedDisplay() {
     <div className={`feed-display br10 ${themeRedux.card1}`}>
       {/* <Scrollbars className='user-feeds-scrollbar' style={{ width: 1000, height: 600 }}> */}
       {/* <OverlayScrollbarsComponent> */}
-      <ul>{feedList.length > 0 ? feedList : <li>No feed to display. Try to add an RSS link above!</li>}</ul>
+      {feedList.length > 0 ? <ul>{feedList}</ul> : <PulseLoader color='#1291b3' loading={true} css='' size={15} />}
       {/* </OverlayScrollbarsComponent> */}
       {/* </Scrollbars> */}
-      <button onClick={(e, feed) => handleLoadMore(e, feed)} disabled={currentlyDisplayedFeed && currentlyDisplayedFeed.feed.isComplete}>
+      <button className='btn load-more-btn accent' onClick={(e, feed) => handleLoadMore(e, feed)} disabled={currentlyDisplayedFeed && currentlyDisplayedFeed.feed.isComplete}>
         {currentlyDisplayedFeed && currentlyDisplayedFeed.feed.isComplete ? 'No more feeds to load' : 'Load more'}
       </button>
     </div>

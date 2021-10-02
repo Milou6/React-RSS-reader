@@ -10,30 +10,25 @@ $b1: #1d2d31;
 /* GENERAL */
 /* ========================================================================== */
 * {
-  transition: background-color 1s;
+  box-sizing: border-box;
+  margin: 0;
+  transition: background-color 1s ease;
 }
 
 html {
-  font-size: 62.5%;
   font-family: 'Roboto', sans-serif;
-
-  transition: background-color 3s ease-in-out;
-}
-body {
-  padding: 0 0;
-  margin: 0 0;
+  font-size: 62.5%;
+  height: min-content;
 }
 
 .app-container {
-  width: 100%;
-  padding: 2rem 2rem;
-}
-
-#root {
   display: flex;
   flex-direction: column;
   align-items: center;
-  // padding: 20px 20px;
+
+  width: 100%;
+  // height: 200vh;
+  padding: 2rem 2rem;
 }
 
 label,
@@ -52,23 +47,17 @@ input {
 .flex {
   display: flex;
 }
+.centered {
+  justify-content: center;
+}
 
-// .gradient1 {
-//   background: linear-gradient(94.3deg, #ff6b00 4.48%, #d5008c 97.49%);
-//   border-radius: 15px;
-// }
-
-// .gradient2 {
-//   background: linear-gradient(269.5deg, #ffdabf 0.11%, #ff8e80 98.42%);
-//   border-radius: 10px;
-// }
 .btn {
   border: none;
-  // color: white;
+
   font-weight: bold;
   border-radius: 10px;
   white-space: nowrap;
-  // overflow: hidden;
+  transition: none;
 }
 .btn:hover {
   cursor: pointer;
@@ -80,13 +69,13 @@ input {
 
 .add-feed-menu {
   display: flex;
-
   align-items: center;
   justify-content: space-between;
-  // height: 50px;
-  width: 90vw;
 
-  padding: 20px 30px;
+  // height: 50px;
+  width: 100%;
+
+  padding: 2em 3em;
   margin: 1rem 1rem;
   filter: drop-shadow(0px 0px 10px rgba(51, 152, 211, 0.25));
 }
@@ -108,22 +97,17 @@ input {
   outline: 2px solid $c3;
 }
 
-.active-feed {
-  color: $c3;
-}
-
 /* ========================================================================== */
 /* UserFeeds */
 /* ========================================================================== */
 .user-feeds {
   display: flex;
   align-items: center;
-  // align-self: flex-end;
 
-  width: 90vw;
+  width: 100%;
   height: 2rem;
-  padding: 20px 30px;
-  margin: 1rem 1rem;
+  padding: 2em 0em;
+
   font-size: 1.5rem;
 
   overflow: auto;
@@ -131,72 +115,68 @@ input {
   filter: drop-shadow(0px 0px 10px rgba(51, 152, 211, 0.25));
 }
 
-.user-feeds li {
-  list-style: none;
-}
-/* .user-feeds a {
-  text-decoration: none;
-  margin: 0 5px;
-} */
-
 .user-feeds-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  // min-width: 15rem;
-  min-width: auto;
+  // min-width: auto;
 
-  padding: 10px 10px;
+  padding: 0.7em 1em;
+  // padding: 10px 10px;
   margin: 0 10px;
 
   background-color: $c1;
   color: white;
   border-radius: 25px;
+  transition: none;
 }
 .user-feeds-item:hover {
   background-color: white;
-  // .user-feeds-item .btn {
   color: $c1;
   outline: 2px solid $c1;
-  // }
 }
 .delete-btn {
-  padding-left: 10px;
-  min-width: 15px;
+  font-size: 1.3em;
+  margin-left: 10px;
 }
 .delete-btn:hover {
   cursor: pointer;
-  width: 20px;
-  height: 20px;
+  color: $c3;
+}
+.active-feed {
   color: $c3;
 }
 
 /* ========================================================================== */
 /* FeedDisplay */
 /* ========================================================================== */
+
 .bottom-container {
-  // max-width: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .feed-display {
-  /* display: flex;
-  flex-direction: column; */
-  /* align-items: left; */
-  align-self: start;
-  /* justify-content: center; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // justify-content: center;
 
-  height: 90vh;
-  width: 75vw;
-  overflow: scroll;
+  height: 75vh;
+  width: 100%;
 
   margin-top: 50px;
-  padding: 0 0;
 
   filter: drop-shadow(0px 0px 30px rgba(51, 152, 211, 0.25));
+  overflow: scroll;
 }
 .feed-display ul {
-  /* margin: 0 0; */
-  padding: 0 10px;
+  padding: 0 1em;
+  width: 100%;
+}
+.feed-display > span {
+  height: 100%;
+  padding: 25% 0;
 }
 
 .display-item {
@@ -204,14 +184,8 @@ input {
   flex-direction: column;
   align-items: left;
 
-  /* width: 400px; */
-  /* height: 4.5rem; */
-  /* width: 100%; */
-  // background: rgba(255, 255, 255, 0.5);
-
-  padding: 15px 5px;
+  padding: 1.5em 0.5em;
   margin: 10px 0;
-  border-radius: 10px;
   // filter: drop-shadow(0px 0px 5px rgba(51, 152, 211, 0.25));
 }
 
@@ -222,24 +196,19 @@ input {
   text-decoration: none;
   font-weight: bold;
   font-size: 2rem;
-  // color: #1d2d31;
-
-  padding: 0 0;
-  margin: 0 0;
 }
 .display-item span:hover {
   cursor: pointer;
+  color: $c3;
 }
 
 .display-item:hover {
   .display-item-arrow {
     color: $c3;
-    font-size: 2.2rem;
   }
 }
 
 .display-item-title {
-  // align-self: flex-start;
   width: 100%;
 }
 
@@ -255,27 +224,49 @@ input {
   color: $c3;
   background-color: #1d2d31;
 }
+.load-more-btn {
+  color: #1d2d31;
+  width: 50%;
+  padding: 0.5em 1em;
+  margin-bottom: 1em;
+}
+.load-more-btn:hover {
+  color: $c3;
+  background-color: white;
+  outline: 2px solid $c3;
+}
+.load-more-btn:disabled {
+  cursor: default;
+  background-color: #5c6466;
+}
+.load-more-btn:disabled:hover {
+  color: #1d2d31;
+  outline: none;
+}
+
 /* ========================================================================== */
 .display-item-description {
   font-size: 1.5rem;
+  line-height: 2.4rem;
   margin-top: 20px;
+  padding: 0 2em;
+  // color: $c1;
 }
 .display-item-description a {
-  font-size: 1.5rem;
+  // font-size: 1.5rem;
   text-decoration: underline;
-  color: black;
+  color: $c1;
 }
 .display-item-description img {
-  max-width: 40rem;
+  max-width: 100%;
 }
 
 /* ========================================================================== */
 /* Settings Menu */
 /* ========================================================================== */
 .settings-menu {
-  width: 18vw;
+  // width: 18vw;
 
-  border-radius: 10px;
   filter: drop-shadow(0px 0px 10px rgba(51, 152, 211, 0.25));
 
   padding: 20px 20px;
@@ -283,14 +274,18 @@ input {
 
   label {
     width: 100%;
+    margin-left: 0.5em;
     // overflow: visible;
     // font-size: 1rem;
+  }
+
+  input[type='checkbox'] {
+    scale: 1.5;
   }
 }
 
 .settings-menu-item {
-  display: flex;
-  justify-content: space-between;
+  margin-bottom: 1em;
   white-space: nowrap;
 }
 

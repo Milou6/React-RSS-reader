@@ -9,15 +9,15 @@ function SettingsMenu() {
   const dispatch = useDispatch()
 
   return (
-    <div className={`settings-menu ${themeRedux.card1}`}>
+    <div className={`settings-menu br10 ${themeRedux.card1}`}>
       <form>
         <div className='settings-menu-item'>
           <input type='checkbox' id='toggleDark' checked={themeRedux.value === 'light' ? false : true} onChange={() => dispatch(toggleTheme())} />
-          <label htmlFor='toggleDark'>Dark mode</label>
+          <label htmlFor='toggleDark'>🌗 Dark mode</label>
         </div>
         <div className='settings-menu-item'>
           <input type='checkbox' id='showItemDescriptions' checked={showFeedDetails ? true : false} onChange={() => dispatch(toggleShowFeedDetails())} />
-          <label htmlFor='showItemDescriptions'>Show feed descriptions</label>
+          <label htmlFor='showItemDescriptions'>📜 Show feed descriptions</label>
         </div>
       </form>
     </div>

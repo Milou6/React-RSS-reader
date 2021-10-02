@@ -4,28 +4,31 @@
     padding: 1rem 1rem;
   }
 
-  .user-feeds {
-    padding: 2rem 1rem;
-  }
-
   .add-feed-btn {
     margin-top: 1rem;
   }
 
   .bottom-container {
     flex-direction: column-reverse;
-    max-height: 90vh;
+    max-height: 75vh;
   }
 
   .feed-display {
-    width: 100vw;
     margin-top: 0;
   }
 
+  .display-item-header {
+    font-size: 1.7rem;
+  }
+
+  .display-item-description {
+    font-size: 1.3rem;
+    padding: 0 1em;
+  }
+
   .settings-menu {
-    width: 90vw;
     padding: 1rem 1rem;
-    margin-bottom: 1rem;
+    margin: 5em 0em 1em 0em;
   }
 
   .display-item-description {

@@ -7,16 +7,12 @@ function Item({ data }) {
   const themeRedux = useSelector((state) => state.theme)
   const show = useSelector((state) => state.feeds.showFeedDetails)
 
-  const onHover = () => {
-    // setShowDescription(!showDescription);
-    setShowDescription(true)
-  }
-  const onHoverOut = () => {
-    // setShowDescription(false)
+  const handleClick = () => {
+    setShowDescription(!showDescription)
   }
 
   return (
-    <li className={`display-item box-g2 ${themeRedux.card2}`} onClick={onHover} onMouseLeave={onHoverOut}>
+    <li className={`display-item br10 box-g2 ${themeRedux.card2}`} onClick={handleClick}>
       <span className='display-item-header'>
         <div>
           <a className='btn link-btn accent' target='_blank' rel='noopener noreferrer' href={data.link}>
